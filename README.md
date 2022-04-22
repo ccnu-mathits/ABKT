@@ -18,13 +18,13 @@ author = {Sannyuya Liu and Jianwei Yu and Qing Li and Ruxia Liang and Yunhan Zha
 ```
 
 ### Dependencies
-* * *
+
 - python 3.6
 - numpy
 - pytorch
 
 ### Usage
-* * *
+
 Run main.py
 ```
 python main.py
