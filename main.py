@@ -23,12 +23,12 @@ def parse_args():
     :return: Parsed arguments
     """
 
-    parser = argparse.ArgumentParser(description="ABKT")
+    parser = argparse.ArgumentParser(description="AICFE")
 
     parser.add_argument('--dataset', default='ASSISTment2009',
                         help='Choose dataset. Default is "AICFE", choose from ["ASSISTment2009","AICFE"]. ')
 
-    parser.add_argument('--type', default='RandomChildOrderSection',
+    parser.add_argument('--type', default='math',
                         help='The subset of the dataset.'
                              '["RandomIterateSection","RandomChildOrderSection"] for dataset ASSISTment2009'
                              '["math","phy"] for dataset AICFE')
@@ -40,7 +40,7 @@ def parse_args():
     parser.add_argument('--KM_guess', type=float, default=0.25,
                         help='The surmise of knowledge module. Default is 0.25.')
 
-    parser.add_argument('--use_pertrained_model', type=bool, default=False,
+    parser.add_argument('--use_pertrained_model', type=bool, default=True,
                         help='Weather use protrained knowledge module or not. Default is True.')
 
     # hyper-parameters in ability module
@@ -61,7 +61,7 @@ def parse_args():
                         help='The type of the joint model. Default is "add". Choose from ["add","mul"]. ')
 
     # hyper-parameters in training process
-    parser.add_argument('--device', default="cuda:0",
+    parser.add_argument('--device', default="cpu",
                         help='The working device of pytorch, '
                              'Default is "cpu", choose from ["cpu","cuda:0","cuda:1",...] ')
 
