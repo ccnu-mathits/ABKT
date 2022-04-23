@@ -26,11 +26,11 @@ from scipy import sparse
 class GMF_BOOSTING:
     def __init__(self,
                  embedding_k = 50,
-                 m_lr = 0.0005,
+                 m_lr = 0.0001,
                  dataset='ASSISTment2009',
                  type = 'RandomIterateSection',
                  min_length = 10,
-                 early_stop = 200,
+                 early_stop = 50,
                  batch_size = 128,
                  epoch = 50000,
                  CMF_k = 5,
@@ -216,9 +216,7 @@ class GMF_BOOSTING:
         self.bestAUC = 0
         self.model = GMF(self.user_num, self.item_num, self.embedding_k,self.aj_norm,
                          self.adj,self.GMF_layer).to(self.device)
-        BCEloss = torch.nn.BCELoss()
-        # optimizer = opt.Adam(self.model.parameters(), lr=self.m_lr)
-        optimizer = opt.SGD(self.model.parameters(), lr=self.m_lr, momentum=0.8)
+        optimizer = opt.Adam(self.model.parameters(), lr=self.m_lr)
         stop = 0
         for e in range(self.epoch):
             self.model.train()
@@ -239,8 +237,6 @@ class GMF_BOOSTING:
                     loss = -torch.mean(w_batch * torch.pow(pred + g_batch / w_batch, 2))
                 elif self.combine == 'mul':
                     loss = -torch.mean(w_batch * k_batch * torch.pow((pred + g_batch / (w_batch * k_batch) - 1), 2))
-                elif self.combine == 'none':
-                    loss = BCEloss(pred.clamp(0, 1), y_batch)
                 else:
                     print("choose right combine method from ['add','mul','none']")
 
@@ -262,8 +258,6 @@ class GMF_BOOSTING:
                 test_pred = test_pred + pre_test_output
             elif self.combine == 'mul':
                 test_pred = test_pred * pre_test_output
-            elif self.combine == 'none':
-                test_pred = test_pred
             else:
                 print("choose right combine method from ['add','mul','none']")
 

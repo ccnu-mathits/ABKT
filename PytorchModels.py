@@ -7,9 +7,6 @@ def IRT_2(user_k,item_k,item_q,guess):
     p = guess + (1-guess)/(1+torch.exp(-d*r))
     return p
 
-
-
-
 class K_CMF(torch.nn.Module):
     def __init__(self,k_hidden_size,skill_num,user_num,item_num,Q_matrix):
         super(K_CMF, self).__init__()
@@ -46,31 +43,6 @@ class K_CMF(torch.nn.Module):
         ui_norm_k = 0
         return out,0,0
 
-
-
-class PMF(torch.nn.Module):
-    def __init__(self,n_users,n_items,embedding_k):
-        super(PMF,self).__init__()
-        self.n_users = n_users
-        self.n_items = n_items
-        self.embedding_k = embedding_k
-
-        self.user_embeddings = torch.nn.Parameter(torch.randn((n_users, embedding_k)) * 0.01)
-        self.item_embeddings = torch.nn.Parameter(torch.randn((n_items, embedding_k)) * 0.01)
-        self.user_GE = torch.nn.Parameter(torch.zeros((n_users)))
-        self.item_GE = torch.nn.Parameter(torch.zeros((n_items)))
-
-
-    def forward(self,user_index,item_index):
-        user_embeddings_batch = self.user_embeddings[user_index,:]
-        user_GE_batch = self.user_GE[user_index]
-        item_embeddings_batch = self.item_embeddings[item_index,:]
-        item_GE_batch = self.item_GE[item_index]
-        ui_batch = (user_embeddings_batch*item_embeddings_batch).sum(1) + user_GE_batch + item_GE_batch
-        pred_batch = ui_batch
-        u_norm = torch.mean(torch.pow(user_embeddings_batch,2))
-        i_norm = torch.mean(torch.pow(item_embeddings_batch,2))
-        return pred_batch,u_norm,i_norm
 
 class GMF(torch.nn.Module):
     def __init__(self,n_users,n_items,embedding_k,aj_norm,adj,layer):

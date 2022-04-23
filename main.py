@@ -23,9 +23,9 @@ def parse_args():
     :return: Parsed arguments
     """
 
-    parser = argparse.ArgumentParser(description="AICFE")
+    parser = argparse.ArgumentParser(description="ABKT")
 
-    parser.add_argument('--dataset', default='ASSISTment2009',
+    parser.add_argument('--dataset', default='AICFE',
                         help='Choose dataset. Default is "AICFE", choose from ["ASSISTment2009","AICFE"]. ')
 
     parser.add_argument('--type', default='math',
@@ -61,7 +61,7 @@ def parse_args():
                         help='The type of the joint model. Default is "add". Choose from ["add","mul"]. ')
 
     # hyper-parameters in training process
-    parser.add_argument('--device', default="cpu",
+    parser.add_argument('--device', default="cuda:0",
                         help='The working device of pytorch, '
                              'Default is "cpu", choose from ["cpu","cuda:0","cuda:1",...] ')
 
